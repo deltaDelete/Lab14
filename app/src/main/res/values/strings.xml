@@ -7,7 +7,7 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="lorem_ipsum">
+    <string name="lorem_ipsum" translatable="false">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
         dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
@@ -53,6 +53,17 @@
     <string name="lastname">Last Name</string>
     <string name="birthdate">Birthday</string>
     <string name="phone_number">Phone Number</string>
-    <string name="phone_format">+%1$s %2$s %3$s-%4$s-%5$s</string>
+    <string name="phone_format" translatable="false">+%1$s %2$s %3$s-%4$s-%5$s</string>
     <string name="invalid_email">Invalid email address</string>
+    <string name="placeholder_firstname">John</string>
+    <string name="placeholder_lastname">Smith</string>
+    <string name="placeholder_phone">+1 999 999-99-99</string>
+    <string name="required_field">Required</string>
+    <string name="invalid_phone_number">Invalid phone number</string>
+    <string name="unmatching_passwords">Passwords doesn\'t match</string>
+    <string name="invalid_format">Invalid format</string>
+    <plurals name="minimal_length_is">
+        <item quantity="one">Minimal length is %1$d symbol</item>
+        <item quantity="other">Minimal length is %1$d symbols</item>
+    </plurals>
 </resources>

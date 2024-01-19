@@ -27,6 +27,7 @@
             android:layout_below="@id/handle"
             android:layout_marginTop="-8dp"
             android:hint="@string/email"
+            app:placeholderText="user@example.com"
             android:labelFor="@id/email_input"
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusTopStart="16dp">
@@ -86,6 +87,7 @@
             android:layout_below="@id/password_confirm_input_layout"
             android:layout_marginTop="4dp"
             android:hint="@string/lastname"
+            app:placeholderText="@string/placeholder_lastname"
             android:labelFor="@id/lastname_input">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -104,6 +106,7 @@
             android:layout_below="@id/lastname_input_layout"
             android:layout_marginTop="4dp"
             android:hint="@string/firstname"
+            app:placeholderText="@string/placeholder_firstname"
             android:labelFor="@id/firstname_input">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -122,6 +125,7 @@
             android:layout_below="@id/firstname_input_layout"
             android:layout_marginTop="4dp"
             android:hint="@string/birthdate"
+            app:placeholderText="31/12/2004"
             android:labelFor="@id/birthdate_input"
             app:endIconDrawable="@drawable/rounded_calendar_month_24"
             app:endIconMode="custom">
@@ -142,6 +146,7 @@
             android:layout_below="@id/birthdate_input_layout"
             android:layout_marginTop="4dp"
             android:hint="@string/phone_number"
+            app:placeholderText="@string/placeholder_phone"
             android:labelFor="@id/phone_input"
             app:boxCornerRadiusBottomEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp">

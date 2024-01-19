@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Лаба 14</string>
+    <string name="action_settings">Настройки</string>
+    <string name="first_fragment_label">Первый фрагмент</string>
+    <string name="second_fragment_label">Второй фрагмент</string>
+    <string name="next">Вперед</string>
+    <string name="previous">Назад</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="login">Вход</string>
+    <string name="login_title">Войти</string>
+    <string name="password">Пароль</string>
+    <string name="email">Почта</string>
+    <string name="password_confirm">Подтверждение пароля</string>
+    <string name="firstname">Имя</string>
+    <string name="lastname">Фамилия</string>
+    <string name="birthdate">Дата рождения</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="invalid_email">Неверный формат почты</string>
+    <string name="placeholder_firstname">Иван</string>
+    <string name="placeholder_lastname">Иванов</string>
+    <string name="placeholder_phone">+7 999 999-99-99</string>
+    <string name="required_field">Обязательное поле</string>
+    <plurals name="minimal_length_is">
+        <item quantity="one">Минимальная длина %1$d символ</item>
+        <item quantity="few">Минимальная длина %1$d символа</item>
+        <item quantity="many">Минимальная длина %1$d символов</item>
+    </plurals>
+    <string name="invalid_phone_number">Неверный формат номера телефона</string>
+    <string name="unmatching_passwords">Пароли не совпадают</string>
+    <string name="invalid_format">Неверный формат</string>
+</resources>

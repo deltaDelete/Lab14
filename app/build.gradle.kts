@@ -62,4 +62,7 @@ dependencies {
     val lifecycleVersion = "2.7.0"
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion")
+
+    val evVersion = "1.0.4"
+    implementation("com.wajahatkarim:easyvalidation-core:$evVersion")
 }
