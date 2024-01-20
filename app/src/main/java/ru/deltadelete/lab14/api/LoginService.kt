@@ -8,6 +8,7 @@ import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import java.io.Serializable
 import java.util.Date
 import java.util.UUID
 
@@ -22,7 +23,11 @@ interface LoginService {
 
     @POST("auth/register")
     @Headers("Content-Type: application/json")
-    suspend fun register(@Body registerBody: RegisterBody): Response<User>
+    suspend fun registerSuspend(@Body registerBody: RegisterBody): Response<User>
+
+    @POST("auth/register")
+    @Headers("Content-Type: application/json")
+    fun register(@Body registerBody: RegisterBody): Call<User>
 }
 
 data class LoginBody(

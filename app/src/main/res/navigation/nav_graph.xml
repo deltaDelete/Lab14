@@ -12,9 +12,6 @@
         tools:layout="@layout/fragment_first">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-        <action
             android:id="@+id/action_FirstFragment_to_loginBottomSheet"
             app:destination="@id/loginBottomSheet"
             app:popUpToInclusive="true" />
@@ -27,19 +24,29 @@
         android:name="ru.deltadelete.lab14.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+        <argument
+            android:name="user"
+            app:argType="string"
+            android:defaultValue="{}" />
     </fragment>
     <dialog
         android:id="@+id/loginBottomSheet"
         android:name="ru.deltadelete.lab14.ui.login_bottom_sheet.LoginBottomSheet"
         tools:layout="@layout/login_sheet_content"
-        android:label="LoginBottomSheet" />
+        android:label="LoginBottomSheet" >
+        <action
+            android:id="@+id/action_loginBottomSheet_to_SecondFragment"
+            app:destination="@id/SecondFragment"
+            app:popUpTo="@id/FirstFragment" />
+    </dialog>
     <dialog
         android:id="@+id/registerBottomSheet"
         android:name="ru.deltadelete.lab14.ui.register_bottom_sheet.RegisterBottomSheet"
         tools:layout="@layout/register_sheet_content"
-        android:label="RegisterBottomSheet" />
+        android:label="RegisterBottomSheet" >
+        <action
+            android:id="@+id/action_registerBottomSheet_to_SecondFragment"
+            app:destination="@id/SecondFragment"
+            app:popUpTo="@id/FirstFragment" />
+    </dialog>
 </navigation>

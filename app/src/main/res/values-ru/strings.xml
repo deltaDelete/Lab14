@@ -26,6 +26,11 @@
         <item quantity="few">Минимальная длина %1$d символа</item>
         <item quantity="many">Минимальная длина %1$d символов</item>
     </plurals>
+    <plurals name="age_at_least">
+        <item quantity="one">Минимальный возраст %1$d год</item>
+        <item quantity="few">Минимальный возраст %1$d года</item>
+        <item quantity="many">Минимальный возраст %1$d лет</item>
+    </plurals>
     <string name="invalid_phone_number">Неверный формат номера телефона</string>
     <string name="unmatching_passwords">Пароли не совпадают</string>
     <string name="invalid_format">Неверный формат</string>

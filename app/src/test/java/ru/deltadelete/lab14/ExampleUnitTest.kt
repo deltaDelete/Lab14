@@ -10,8 +10,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import ru.deltadelete.lab14.api.Common
 import ru.deltadelete.lab14.api.LoginBody
+import ru.deltadelete.lab14.api.RegisterBody
 import ru.deltadelete.lab14.api.RetrofitClient
 import ru.deltadelete.lab14.api.User
+import java.sql.Date
+import java.text.SimpleDateFormat
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -48,6 +51,30 @@ class ExampleUnitTest {
             println(cookie)
             assertNotNull(cookie)
 
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    @Test
+    fun register_new_user() {
+        val registerBody = RegisterBody(
+            "Юзеров",
+            "Юзер",
+            SimpleDateFormat("MM/dd/yyyy").parse("10/12/2004"),
+            "user@example.com",
+            "password",
+            "password",
+        )
+        val sud = Common.loginService
+
+        val call = sud.register(registerBody)
+
+        try {
+            val response = call.execute()
+            val body = response.body()
+            println(body)
+                assertNotNull(body)
         } catch (e: Exception) {
             throw e
         }

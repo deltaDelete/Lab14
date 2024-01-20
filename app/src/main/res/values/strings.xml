@@ -66,4 +66,8 @@
         <item quantity="one">Minimal length is %1$d symbol</item>
         <item quantity="other">Minimal length is %1$d symbols</item>
     </plurals>
+    <plurals name="age_at_least">
+        <item quantity="one">Minimal age is %1$d year</item>
+        <item quantity="other">Minimal age is %1$d years</item>
+    </plurals>
 </resources>
