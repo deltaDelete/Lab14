@@ -9,6 +9,9 @@ import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.textfield.TextInputLayout
+import com.redmadrobot.inputmask.MaskedTextChangedListener
+import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy
+import com.redmadrobot.inputmask.model.Notation
 import com.wajahatkarim3.easyvalidation.core.Validator
 import com.wajahatkarim3.easyvalidation.core.rules.BaseRule
 import com.wajahatkarim3.easyvalidation.core.view_ktx.validator
@@ -118,7 +121,7 @@ class AgeValidator(private val atLeast: Int, private var errorMessage: String? =
         return try {
             val time = dateFormat.parse(text).time
             calendarConstraints.dateValidator.isValid(time)
-        } catch(e: ParseException) {
+        } catch (e: ParseException) {
             false
         }
     }
@@ -132,7 +135,78 @@ class AgeValidator(private val atLeast: Int, private var errorMessage: String? =
             .setValidator(DateValidatorPointBackward.before(calendar.timeInMillis))
             .build()
 
-    private val dateFormat: SimpleDateFormat = SimpleDateFormat(DATETIME_FORMAT, Locale.getDefault())
+    private val dateFormat: SimpleDateFormat =
+        SimpleDateFormat(DATETIME_FORMAT, Locale.getDefault())
+}
+
+fun MaskedTextChangedListener.Companion.installOn(
+    editText: EditText,
+    primaryFormat: String,
+    valueListener: (maskFilled: Boolean, extractedValue: String, formattedValue: String, tailPlaceholder: String) -> Unit
+): MaskedTextChangedListener {
+    return MaskedTextChangedListener.Companion.installOn(
+        editText,
+        primaryFormat,
+        object : MaskedTextChangedListener.ValueListener {
+            override fun onTextChanged(
+                maskFilled: Boolean,
+                extractedValue: String,
+                formattedValue: String,
+                tailPlaceholder: String
+            ) {
+                valueListener(maskFilled, extractedValue, formattedValue, tailPlaceholder)
+            }
+        })
+}
+
+fun MaskedTextChangedListener.Companion.installOn(
+    editText: EditText,
+    primaryFormat: String,
+    affineFormats: List<String>,
+    affinityCalculationStrategy: AffinityCalculationStrategy,
+    valueListener: (maskFilled: Boolean, extractedValue: String, formattedValue: String, tailPlaceholder: String) -> Unit
+): MaskedTextChangedListener {
+    return MaskedTextChangedListener.Companion.installOn(
+        editText,
+        primaryFormat,
+        affineFormats,
+        affinityCalculationStrategy,
+        object : MaskedTextChangedListener.ValueListener {
+            override fun onTextChanged(
+                maskFilled: Boolean,
+                extractedValue: String,
+                formattedValue: String,
+                tailPlaceholder: String
+            ) {
+                valueListener(maskFilled, extractedValue, formattedValue, tailPlaceholder)
+            }
+        })
+}
+
+fun MaskedTextChangedListener.Companion.installOn(
+    editText: EditText,
+    primaryFormat: String,
+    affineFormats: List<String>,
+    notations: List<Notation>,
+    affinityCalculationStrategy: AffinityCalculationStrategy,
+    valueListener: (maskFilled: Boolean, extractedValue: String, formattedValue: String, tailPlaceholder: String) -> Unit
+): MaskedTextChangedListener {
+    return MaskedTextChangedListener.Companion.installOn(
+        editText,
+        primaryFormat,
+        affineFormats,
+        notations,
+        affinityCalculationStrategy,
+        valueListener = object : MaskedTextChangedListener.ValueListener {
+            override fun onTextChanged(
+                maskFilled: Boolean,
+                extractedValue: String,
+                formattedValue: String,
+                tailPlaceholder: String
+            ) {
+                valueListener(maskFilled, extractedValue, formattedValue, tailPlaceholder)
+            }
+        })
 }
 
 const val DATETIME_FORMAT = "dd/MM/yyyy"

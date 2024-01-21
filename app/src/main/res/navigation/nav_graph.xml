@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/SecondFragment"
         android:name="ru.deltadelete.lab14.SecondFragment"
-        android:label="@string/second_fragment_label"
+        android:label="@string/user_info_fragment_label"
         tools:layout="@layout/fragment_second">
         <argument
             android:name="user"

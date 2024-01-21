@@ -50,12 +50,19 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/remember_me_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password_input_layout"
+        android:text="@string/remember_me" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/confirm_button"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/password_input_layout"
+        android:layout_below="@id/remember_me_checkbox"
         android:layout_marginTop="16dp"
         android:text="@string/login" />
 </RelativeLayout>

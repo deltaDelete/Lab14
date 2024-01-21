@@ -1,172 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="ru.deltadelete.lab14.ui.register_bottom_sheet.RegisterViewModel" />
-    </data>
-    
-    <RelativeLayout
-        android:id="@+id/root"
+    <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+        android:id="@+id/handle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="wrap_content" />
 
-        <com.google.android.material.bottomsheet.BottomSheetDragHandleView
-            android:id="@+id/handle"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_input_layout"
+        style="?attr/textInputOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/handle"
+        android:layout_marginTop="-8dp"
+        android:hint="@string/email"
+        android:labelFor="@id/email_input"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:placeholderText="user@example.com">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:autofillHints="emailAddress,username"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email_input_layout"
-            style="?attr/textInputOutlinedStyle"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_input_layout"
+        style="?attr/textInputOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/email_input_layout"
+        android:layout_marginTop="4dp"
+        android:hint="@string/password"
+        android:labelFor="@id/password_input"
+        app:endIconMode="password_toggle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/handle"
-            android:layout_marginTop="-8dp"
-            android:hint="@string/email"
-            app:placeholderText="user@example.com"
-            android:labelFor="@id/email_input"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusTopStart="16dp">
+            android:layout_height="match_parent"
+            android:autofillHints="password"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints="emailAddress,username"
-                android:inputType="textEmailAddress"
-                android:text="@{viewModel.email}" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_confirm_input_layout"
+        style="?attr/textInputOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password_input_layout"
+        android:layout_marginTop="4dp"
+        android:hint="@string/password_confirm"
+        android:labelFor="@id/password_confirm_input"
+        app:endIconMode="password_toggle">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password_input_layout"
-            style="?attr/textInputOutlinedStyle"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_confirm_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/email_input_layout"
-            android:layout_marginTop="4dp"
-            android:hint="@string/password"
-            android:labelFor="@id/password_input"
-            app:endIconMode="password_toggle">
+            android:layout_height="match_parent"
+            android:autofillHints="password"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints="password"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lastname_input_layout"
+        style="?attr/textInputOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password_confirm_input_layout"
+        android:layout_marginTop="4dp"
+        android:hint="@string/lastname"
+        android:labelFor="@id/lastname_input"
+        app:placeholderText="@string/placeholder_lastname">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password_confirm_input_layout"
-            style="?attr/textInputOutlinedStyle"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/lastname_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/password_input_layout"
-            android:layout_marginTop="4dp"
-            android:hint="@string/password_confirm"
-            android:labelFor="@id/password_confirm_input"
-            app:endIconMode="password_toggle">
+            android:layout_height="match_parent"
+            android:autofillHints="family-name"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password_confirm_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints="password"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/firstname_input_layout"
+        style="?attr/textInputOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lastname_input_layout"
+        android:layout_marginTop="4dp"
+        android:hint="@string/firstname"
+        android:labelFor="@id/firstname_input"
+        app:placeholderText="@string/placeholder_firstname">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/lastname_input_layout"
-            style="?attr/textInputOutlinedStyle"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/firstname_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/password_confirm_input_layout"
-            android:layout_marginTop="4dp"
-            android:hint="@string/lastname"
-            app:placeholderText="@string/placeholder_lastname"
-            android:labelFor="@id/lastname_input">
+            android:layout_height="match_parent"
+            android:autofillHints="first-name,given-name,display-name"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/lastname_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints="family-name"
-                android:inputType="textPersonName" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/birthdate_input_layout"
+        style="?attr/textInputOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/firstname_input_layout"
+        android:layout_marginTop="4dp"
+        android:hint="@string/birthdate"
+        android:labelFor="@id/birthdate_input"
+        app:endIconDrawable="@drawable/rounded_calendar_month_24"
+        app:endIconMode="custom"
+        app:placeholderText="31/12/2004">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/firstname_input_layout"
-            style="?attr/textInputOutlinedStyle"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/birthdate_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lastname_input_layout"
-            android:layout_marginTop="4dp"
-            android:hint="@string/firstname"
-            app:placeholderText="@string/placeholder_firstname"
-            android:labelFor="@id/firstname_input">
+            android:layout_height="match_parent"
+            android:autofillHints="birthDateFull"
+            android:inputType="none|date" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/firstname_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints="first-name,given-name,display-name"
-                android:inputType="textPersonName" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phone_input_layout"
+        style="?attr/textInputOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/birthdate_input_layout"
+        android:layout_marginTop="4dp"
+        android:hint="@string/phone_number"
+        android:labelFor="@id/phone_input"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:placeholderText="@string/placeholder_phone">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/birthdate_input_layout"
-            style="?attr/textInputOutlinedStyle"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phone_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/firstname_input_layout"
-            android:layout_marginTop="4dp"
-            android:hint="@string/birthdate"
-            app:placeholderText="31/12/2004"
-            android:labelFor="@id/birthdate_input"
-            app:endIconDrawable="@drawable/rounded_calendar_month_24"
-            app:endIconMode="custom">
+            android:layout_height="match_parent"
+            android:autofillHints="phoneNumber"
+            android:digits="1234567890+-() "
+            android:inputType="phone|number" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/birthdate_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints="birthDateFull"
-                android:inputType="none|date" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/remember_me_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phone_input_layout"
+        android:text="@string/remember_me" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phone_input_layout"
-            style="?attr/textInputOutlinedStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/birthdate_input_layout"
-            android:layout_marginTop="4dp"
-            android:hint="@string/phone_number"
-            app:placeholderText="@string/placeholder_phone"
-            android:labelFor="@id/phone_input"
-            app:boxCornerRadiusBottomEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phone_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints="phoneNumber"
-                android:inputType="phone" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/confirm_button"
-            style="?attr/materialIconButtonFilledStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/phone_input_layout"
-            android:layout_marginTop="8dp"
-            android:elevation="@dimen/cardview_default_elevation"
-            android:text="@string/register" />
-    </RelativeLayout>
-</layout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirm_button"
+        style="?attr/materialIconButtonOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/remember_me_checkbox"
+        android:layout_marginTop="8dp"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:text="@string/register" />
+</RelativeLayout>

@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">Лаба 14</string>
     <string name="action_settings">Настройки</string>
-    <string name="first_fragment_label">Первый фрагмент</string>
-    <string name="second_fragment_label">Второй фрагмент</string>
+    <string name="first_fragment_label">Вход</string>
+    <string name="user_info_fragment_label">Account</string>
     <string name="next">Вперед</string>
     <string name="previous">Назад</string>
     <string name="register">Зарегистрироваться</string>
@@ -34,4 +34,10 @@
     <string name="invalid_phone_number">Неверный формат номера телефона</string>
     <string name="unmatching_passwords">Пароли не совпадают</string>
     <string name="invalid_format">Неверный формат</string>
+    <string name="exit">Выйти</string>
+    <string name="already_registered">Аккаунт с этой почтой уже зарегистрирован</string>
+    <string name="remember_me">Запомнить меня</string>
+    <string name="avatar">Аватар</string>
+    <string name="rating">Рейтинг: %1$d</string>
+    <string name="birthday">День рождения: %1$s</string>
 </resources>

@@ -1,42 +1,36 @@
 package ru.deltadelete.lab14.ui.register_bottom_sheet
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.telephony.PhoneNumberFormattingTextWatcher
-import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
-import android.text.format.DateUtils
 import android.util.Log
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.os.bundleOf
 import androidx.core.view.forEach
-import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavOptions
-import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.progressindicator.CircularProgressIndicatorSpec
+import com.google.android.material.progressindicator.IndeterminateDrawable
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
-import com.wajahatkarim3.easyvalidation.core.rules.BaseRule
-import com.wajahatkarim3.easyvalidation.core.view_ktx.validator
+import com.google.gson.GsonBuilder
+import com.redmadrobot.inputmask.MaskedTextChangedListener
+import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
+import ru.deltadelete.lab14.MainActivity
 import ru.deltadelete.lab14.R
 import ru.deltadelete.lab14.SecondFragment
 import ru.deltadelete.lab14.api.Common
@@ -48,18 +42,19 @@ import ru.deltadelete.lab14.utils.DATETIME_FORMAT
 import ru.deltadelete.lab14.utils.DATE_FORMAT
 import ru.deltadelete.lab14.utils.PHONE_REGEX
 import ru.deltadelete.lab14.utils.addValidationToList
-import ru.deltadelete.lab14.utils.formatInsertAt
-import ru.deltadelete.lab14.utils.formatStartsWith
+import ru.deltadelete.lab14.utils.installOn
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
-import java.util.UUID
 
 
 class RegisterBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var binding: RegisterSheetContentBinding
     private val viewModel: RegisterViewModel by viewModels()
+    private lateinit var progressIndicatorDrawable: IndeterminateDrawable<CircularProgressIndicatorSpec>
+    private lateinit var sharedPreferences: SharedPreferences
+    private val gson = GsonBuilder()
+        .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,15 +63,39 @@ class RegisterBottomSheet : BottomSheetDialogFragment() {
     ): View {
         binding = RegisterSheetContentBinding.inflate(inflater, container, false)
 
+        sharedPreferences = requireActivity().getSharedPreferences(
+            MainActivity.PREFS,
+            Context.MODE_PRIVATE
+        )
+
         (dialog as BottomSheetDialog).behavior.apply {
             skipCollapsed = true
         }
+        val spec = CircularProgressIndicatorSpec(
+            requireContext(),
+            null,
+            0,
+            com.google.android.material.R.style.Widget_Material3_CircularProgressIndicator_ExtraSmall
+        )
 
+        progressIndicatorDrawable = IndeterminateDrawable.createCircularDrawable(
+            requireContext(), spec
+        )
+
+        setupInputMasks()
         setupInputFilters()
         initOnRegisterClick()
 
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+        viewModel.rememberMe.observe(viewLifecycleOwner) {
+            binding.rememberMeCheckbox.isChecked = it
+            val edit = sharedPreferences.edit()
+            edit.putBoolean("REMEMBER_ME", it)
+            edit.apply()
+        }
+
+        binding.rememberMeCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.rememberMe.postValue(isChecked)
+        }
 
         return binding.root
     }
@@ -91,25 +110,19 @@ class RegisterBottomSheet : BottomSheetDialogFragment() {
             .build()
 
 
-    fun navigateLoggedIn(user: User) {
+    private fun navigateLoggedIn(user: User) {
         val json = Gson().toJson(user)
+        val bundle = Bundle()
+        bundle.putString(SecondFragment.ARG_USER, json)
         findNavController().navigate(
             R.id.action_registerBottomSheet_to_SecondFragment,
-            bundleOf(
-                SecondFragment.ARG_USER to json
-            )
+            bundle
         )
     }
 
     val validators = emptyList<Pair<EditText?, TextWatcher?>>().toMutableList()
 
     private fun setupInputFilters() {
-        binding.phoneInput.addTextChangedListener(PhoneNumberFormattingTextWatcher())
-        binding.phoneInput.formatStartsWith("+")
-        // Автодобавление слешей
-        binding.birthdateInput.formatInsertAt(2, "/")
-        binding.birthdateInput.formatInsertAt(5, "/")
-
         binding.emailInputLayout.errorIconDrawable = null
         binding.passwordInputLayout.errorIconDrawable = null
         binding.passwordConfirmInputLayout.errorIconDrawable = null
@@ -176,8 +189,36 @@ class RegisterBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+    private fun setupInputMasks() {
+        MaskedTextChangedListener.installOn(
+            binding.phoneInput,
+            "+[0] ([000]) [000]-[00]-[00]",
+            listOf("+[00] ([000]) [000]-[00]-[00]", "+[000] ([000]) [000]-[00]-[00]"),
+            AffinityCalculationStrategy.CAPACITY
+        )
+        { maskFilled, extractedValue, formattedValue, tailPlaceholder ->
+            Log.d("$TAG.Masked", extractedValue)
+            Log.d("$TAG.Masked", maskFilled.toString())
+            binding.phoneInputLayout.error =
+                if (!maskFilled) getString(R.string.invalid_phone_number) else null
+        }
+
+        MaskedTextChangedListener.Companion.installOn(
+            binding.birthdateInput,
+            "[00]{/}[00]{/}[0000]",
+        ) { maskFilled, extractedValue, formattedValue, tailPlaceholder ->
+            if (maskFilled) {
+                binding.birthdateInputLayout.error = null
+                return@installOn
+            }
+            binding.birthdateInputLayout.error = getString(R.string.invalid_format)
+            binding.birthdateInputLayout.placeholderText = tailPlaceholder
+        }
+    }
+
     private fun initOnRegisterClick() {
         binding.confirmButton.setOnClickListener {
+            binding.confirmButton.icon = progressIndicatorDrawable
             validators.forEach { (editText, textWatcher) ->
                 textWatcher?.afterTextChanged(editText?.editableText)
             }
@@ -197,10 +238,21 @@ class RegisterBottomSheet : BottomSheetDialogFragment() {
                         passwordInput.text.toString(),
                         passwordConfirmInput.text.toString()
                     )
-                ) {
-                    if (it != null) {
-                        this@RegisterBottomSheet.navigateLoggedIn(it)
+                ) { it, already ->
+                    binding.confirmButton.icon = null
+                    if (already) {
+                        binding.emailInputLayout.error = getString(R.string.already_registered)
                     }
+                    if (it == null) {
+                        return@register
+                    }
+                    if (viewModel.rememberMe.value == true) {
+                        val edit = sharedPreferences.edit()
+                        edit.putString("USER", gson.toJson(it))
+                        edit.apply()
+                    }
+
+                    this@RegisterBottomSheet.navigateLoggedIn(it)
                 }
             }
         }
@@ -222,42 +274,28 @@ class RegisterBottomSheet : BottomSheetDialogFragment() {
     }
 }
 
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    val email: MutableLiveData<String> = MutableLiveData("")
-    val birthdate: MutableLiveData<Date> = MutableLiveData(Date())
+    val rememberMe = savedStateHandle.getLiveData(REMEMBER_ME_KEY, false)
 
-    fun register(registerBody: RegisterBody, callback: (User?) -> Unit) {
-        // TODO: Реальная регистрация не работает со стороны сервера
-//        viewModelScope.launch {
-//            Common.loginService.registerSuspend(
-//                registerBody
-//            ).apply {
-//                val body = body()
-//                if (body == null || !isSuccessful) {
-//                    callback(
-//                        null
-//                    )
-//                }
-//                callback(body)
-//            }
-//        }
-        try {
-            callback(
-                User(
-                    UUID.randomUUID(),
-                    registerBody.firstName,
-                    registerBody.lastName,
-                    registerBody.birthDate,
-                    Date(),
-                    0,
-                    registerBody.email,
-                    registerBody.email.uppercase(Locale.getDefault()),
-                    false
-                )
-            )
-        } catch (e: Exception) {
-            callback(null)
+    fun register(registerBody: RegisterBody, callback: (User?, alreadyRegistered: Boolean) -> Unit) {
+        viewModelScope.launch {
+            Common.loginService.registerSuspend(
+                registerBody
+            ).apply {
+                val body = body()
+                if (body == null) {
+                    when (code()) {
+                        409 -> callback(null, true)
+                        else -> callback(null, false)
+                    }
+                }
+                callback(body, false)
+            }
         }
+    }
+
+    companion object {
+        const val REMEMBER_ME_KEY = "RememberMe"
     }
 }

@@ -2,8 +2,8 @@
     <string name="app_name">Lab14</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="first_fragment_label">Login</string>
+    <string name="user_info_fragment_label">Account</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
@@ -62,6 +62,12 @@
     <string name="invalid_phone_number">Invalid phone number</string>
     <string name="unmatching_passwords">Passwords doesn\'t match</string>
     <string name="invalid_format">Invalid format</string>
+    <string name="exit">Exit</string>
+    <string name="already_registered">Account with this email is already registered</string>
+    <string name="remember_me">Remember me</string>
+    <string name="avatar">Avatar</string>
+    <string name="rating">Rating: %1$d</string>
+    <string name="birthday">Birthday: %1$s</string>
     <plurals name="minimal_length_is">
         <item quantity="one">Minimal length is %1$d symbol</item>
         <item quantity="other">Minimal length is %1$d symbols</item>

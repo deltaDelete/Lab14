@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
 }
 
 android {
@@ -36,10 +35,6 @@ android {
     }
     buildFeatures {
         viewBinding = true
-        dataBinding = true
-    }
-    dataBinding {
-        enable = true
     }
 }
 
@@ -65,4 +60,10 @@ dependencies {
 
     val evVersion = "1.0.4"
     implementation("com.wajahatkarim:easyvalidation-core:$evVersion")
+
+    val inputMaskVersion = "7.2.4"
+    implementation("com.redmadrobot:input-mask-android:$inputMaskVersion")
+
+    val glide = "4.16.0"
+    implementation("com.github.bumptech.glide:glide:$glide")
 }
