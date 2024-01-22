@@ -30,6 +30,8 @@ import com.google.gson.GsonBuilder
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Response
 import ru.deltadelete.lab14.MainActivity
 import ru.deltadelete.lab14.R
 import ru.deltadelete.lab14.SecondFragment
@@ -144,8 +146,8 @@ class RegisterBottomSheet : BottomSheetDialogFragment() {
         }
 
         binding.phoneInputLayout.addValidationToList(validators) {
-            nonEmpty(getString(R.string.required_field))
-                .regex(PHONE_REGEX, getString(R.string.invalid_phone_number))
+            nonEmpty(errorMsg = getString(R.string.required_field))
+                .regex(PHONE_REGEX, errorMsg = getString(R.string.invalid_phone_number))
         }
 
         binding.emailInputLayout.addValidationToList(validators) {
@@ -280,22 +282,32 @@ class RegisterViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     fun register(registerBody: RegisterBody, callback: (User?, alreadyRegistered: Boolean) -> Unit) {
         viewModelScope.launch {
-            Common.loginService.registerSuspend(
+            Common.loginService.register(
                 registerBody
-            ).apply {
-                val body = body()
-                if (body == null) {
-                    when (code()) {
-                        409 -> callback(null, true)
-                        else -> callback(null, false)
+            ).enqueue(object : retrofit2.Callback<User> {
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+                    val body = response.body()
+                    if (body == null) {
+                        when (response.code()) {
+                            409 -> callback(null, true)
+                            else -> callback(null, false)
+                        }
                     }
+                    callback(body, false)
                 }
-                callback(body, false)
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    callback(null, false)
+                    Log.e("$TAG.register", "Error when handling request", t)
+                    t.printStackTrace()
+                }
+            }).apply {
             }
         }
     }
 
     companion object {
+        const val TAG = "RegisterViewModel"
         const val REMEMBER_ME_KEY = "RememberMe"
     }
 }

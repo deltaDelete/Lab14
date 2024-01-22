@@ -28,6 +28,7 @@
             android:id="@+id/email_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:imeOptions="actionNext"
             android:autofillHints="emailAddress,username"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -47,6 +48,7 @@
             android:id="@+id/password_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:imeOptions="actionNext"
             android:autofillHints="password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -66,6 +68,7 @@
             android:id="@+id/password_confirm_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:imeOptions="actionNext"
             android:autofillHints="password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -85,6 +88,7 @@
             android:id="@+id/lastname_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:imeOptions="actionNext"
             android:autofillHints="family-name"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -104,6 +108,7 @@
             android:id="@+id/firstname_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:imeOptions="actionNext"
             android:autofillHints="first-name,given-name,display-name"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -125,6 +130,7 @@
             android:id="@+id/birthdate_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:imeOptions="actionNext"
             android:autofillHints="birthDateFull"
             android:inputType="none|date" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -147,6 +153,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:autofillHints="phoneNumber"
+            android:imeOptions="actionNext"
             android:digits="1234567890+-() "
             android:inputType="phone|number" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -155,6 +162,7 @@
         android:id="@+id/remember_me_checkbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:imeOptions="actionNone"
         android:layout_below="@id/phone_input_layout"
         android:text="@string/remember_me" />
 
@@ -163,6 +171,7 @@
         style="?attr/materialIconButtonOutlinedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
         android:layout_below="@id/remember_me_checkbox"
         android:layout_marginTop="8dp"
         android:elevation="@dimen/cardview_default_elevation"

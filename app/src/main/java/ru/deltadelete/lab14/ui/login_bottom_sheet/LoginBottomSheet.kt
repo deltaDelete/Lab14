@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -190,8 +191,14 @@ class LoginViewModel : ViewModel() {
 
                 override fun onFailure(call: Call<User>, t: Throwable) {
                     callback(null)
+                    Log.e("$TAG.login", "Error when handling login request", t)
+                    t.printStackTrace()
                 }
             })
         }
+    }
+
+    companion object {
+        const val TAG = "LoginViewModel"
     }
 }

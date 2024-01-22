@@ -71,6 +71,13 @@ fun EditText.addValidation(validatorBuilder: Validator.() -> Validator) {
     }
 }
 
+fun TextInputLayout.addValidationToList(
+    validators: MutableList<Pair<EditText?, TextWatcher?>>,
+    validatorBuilder: Validator.() -> Validator
+) {
+    validators.add(editText to addValidation(validatorBuilder))
+}
+
 fun TextInputLayout.addValidation(validatorBuilder: Validator.() -> Validator): TextWatcher? {
     return editText?.doAfterTextChanged {
         Validator(it.toString()).validatorBuilder()
@@ -98,12 +105,6 @@ fun Boolean.ifFalse(block: () -> Unit) {
     block.invoke()
 }
 
-fun TextInputLayout.addValidationToList(
-    validators: MutableList<Pair<EditText?, TextWatcher?>>,
-    validatorBuilder: Validator.() -> Validator
-) {
-    validators.add(editText to addValidation(validatorBuilder))
-}
 
 class AgeValidator(private val atLeast: Int, private var errorMessage: String? = null) : BaseRule {
     override fun getErrorMessage(): String {
@@ -216,4 +217,4 @@ val PHONE_REGEX_GROUPS =
     "^(\\+?(\\d{1,3}))\\s?(\\d{3})[\\s-]?(\\d{3})[\\s-]?(\\d{2})[\\s-]?(\\d{2})\$"
 val DIGIT_MINUS_PLUS_OR_SPACE: Regex = "[\\d\\s-]?".toRegex()
 val EMAIL_REGEX = androidx.core.util.PatternsCompat.EMAIL_ADDRESS.toRegex()
-val DATE_FORMAT = "\\d{2}/(?:0[0-9]|1[0-2])/(?:\\d{2}|\\d{4})"
+val DATE_FORMAT = "\\d{2}\\/(?:0[0-9]|1[0-2])\\/\\d{4}"

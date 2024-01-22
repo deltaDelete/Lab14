@@ -3,7 +3,7 @@
     <string name="app_name">Лаба 14</string>
     <string name="action_settings">Настройки</string>
     <string name="first_fragment_label">Вход</string>
-    <string name="user_info_fragment_label">Account</string>
+    <string name="user_info_fragment_label">Аккаунт</string>
     <string name="next">Вперед</string>
     <string name="previous">Назад</string>
     <string name="register">Зарегистрироваться</string>
